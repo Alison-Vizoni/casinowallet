@@ -17,8 +17,8 @@ public class Wallet {
     @Column(nullable = false)
     private Long balance;
 
-    @ManyToOne
-    private Currency baseCurrency;
+    @Column(nullable = false)
+    private String baseCurrency;
 
     @OneToOne
     private Player player;

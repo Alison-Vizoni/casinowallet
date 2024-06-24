@@ -26,11 +26,11 @@ public class Access {
     @Column(nullable = false)
     private Double currencyRateUsd;
 
-    @ManyToOne
-    private Player player;
+    @Column(nullable = false)
+    private String currencyCode;
 
     @ManyToOne
-    private Currency currency;
+    private Player player;
 
     @ManyToOne
     private Game game;

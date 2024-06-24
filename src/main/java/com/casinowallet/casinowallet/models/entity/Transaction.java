@@ -30,15 +30,15 @@ public class Transaction {
     @Column(nullable = false)
     private LocalDateTime dateTime;
 
+    @Column(nullable = false)
+    private String currencyCode;
+
+    @Column(nullable = false)
+    private Long gameId;
+
     @ManyToOne(optional = false)
     private Provider provider;
 
     @ManyToOne(optional = false)
     private Wallet wallet;
-
-    @ManyToOne
-    private Currency currency;
-
-    @ManyToOne
-    private Game game;
 }
