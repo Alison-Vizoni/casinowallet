@@ -9,12 +9,12 @@ import lombok.Data;
 public class Game {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
     private String gameStrId;
 
-    @Column
+    @ManyToOne
     private Provider provider;
 }
