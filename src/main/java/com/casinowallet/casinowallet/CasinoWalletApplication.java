@@ -9,5 +9,4 @@ public class CasinoWalletApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CasinoWalletApplication.class, args);
 	}
-
 }

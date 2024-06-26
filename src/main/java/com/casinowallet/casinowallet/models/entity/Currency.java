@@ -2,15 +2,24 @@ package com.casinowallet.casinowallet.models.entity;
 
 import com.casinowallet.casinowallet.models.entity.enums.CurrencyType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serial;
+import java.io.Serializable;
 
 @Entity
 @Table
 @Data
-public class Currency {
+@AllArgsConstructor
+@NoArgsConstructor
+public class Currency implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -21,4 +30,7 @@ public class Currency {
 
     @Column(nullable = false)
     private CurrencyType type;
+
+    @Column(nullable = false)
+    private Boolean enabled;
 }
