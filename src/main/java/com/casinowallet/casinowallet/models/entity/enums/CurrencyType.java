@@ -8,11 +8,11 @@ public enum CurrencyType {
     CRYPTO(2L, "Crypto");
 
     private final Long code;
-    private final String description;
+    private final String name;
 
-    CurrencyType(Long code, String description) {
+    CurrencyType(Long code, String name) {
         this.code = code;
-        this.description = description;
+        this.name = name;
     }
 
     public static CurrencyType toEnum(Long code) {
@@ -22,5 +22,14 @@ public enum CurrencyType {
             }
         }
         throw new IllegalArgumentException("Invalid currency code: " + code);
+    }
+
+    public static CurrencyType toEnum(String name) {
+        for(CurrencyType currencyType: CurrencyType.values()){
+            if(name.equals(currencyType.getName())){
+                return currencyType;
+            }
+        }
+        throw new IllegalArgumentException("Invalid currency name: " + name);
     }
 }
