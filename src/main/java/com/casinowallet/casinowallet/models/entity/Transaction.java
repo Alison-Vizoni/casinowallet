@@ -41,4 +41,7 @@ public class Transaction {
 
     @ManyToOne(optional = false)
     private Wallet wallet;
+
+    @ManyToOne(optional = false)
+    private Access access;
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table
@@ -34,4 +35,7 @@ public class Access {
 
     @ManyToOne
     private Game game;
+
+    @OneToMany(mappedBy = "access")
+    private List<Transaction> transactions;
 }
