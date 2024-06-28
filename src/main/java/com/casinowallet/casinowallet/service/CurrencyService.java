@@ -4,7 +4,9 @@ import com.casinowallet.casinowallet.models.dto.CurrencyDto;
 import com.casinowallet.casinowallet.models.entity.Currency;
 import com.casinowallet.casinowallet.models.entity.enums.CurrencyType;
 import com.casinowallet.casinowallet.repository.CurrencyRepository;
+import com.casinowallet.casinowallet.service.exceptions.DataIntegrityException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +23,11 @@ public class CurrencyService {
 
     public Currency insert(Currency currency) {
         currency.setId(null);
-        return currencyRepository.save(currency);
+        try {
+            return currencyRepository.save(currency);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityException("Error saving the currency in the database.", e);
+        }
     }
 
     public Currency fromDto(CurrencyDto currencyDto) {

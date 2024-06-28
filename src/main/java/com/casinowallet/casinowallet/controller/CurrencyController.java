@@ -30,7 +30,7 @@ public class CurrencyController {
     @PostMapping
     public ResponseEntity<Currency> insert(@Valid @RequestBody CurrencyDto currencyDto) {
         Currency currency = currencyService.fromDto(currencyDto);
-        currency = currencyService.insert(currency);
-        return ResponseEntity.status(HttpStatus.CREATED).body(currency);
+        Currency newCurrency = currencyService.insert(currency);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newCurrency);
     }
 }
