@@ -31,6 +31,6 @@ public class Currency implements Serializable {
     @Column(nullable = false)
     private CurrencyType type;
 
-    @Column(nullable = false)
-    private Boolean enabled;
+    @Column(nullable = false, columnDefinition = "boolean default true")
+    private Boolean enabled = true;
 }

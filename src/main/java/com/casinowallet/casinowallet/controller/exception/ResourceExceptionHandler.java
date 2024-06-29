@@ -18,4 +18,11 @@ public class ResourceExceptionHandler {
                 "Data integrity", e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<StandardError> databaseError(IllegalArgumentException e, HttpServletRequest request) {
+        StandardError error = new StandardError(Instant.now(), HttpStatus.BAD_REQUEST.value(),
+                "Illegal Argument", e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
 }
