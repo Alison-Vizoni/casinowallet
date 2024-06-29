@@ -9,14 +9,18 @@ public enum TransactionType {
     ROLLBACK(3L, "Rollback");
 
     private final Long code;
-    private final String name;
+    private final String type;
 
-    TransactionType(Long code, String name) {
+    TransactionType(Long code, String type) {
         this.code = code;
-        this.name = name;
+        this.type = type;
     }
 
     public static TransactionType toEnum(Long code) {
+        if (null == code) {
+            throw new IllegalArgumentException("Transaction code can't be null.");
+        }
+
         for(TransactionType transactionType: TransactionType.values()){
             if(code.equals(transactionType.getCode())){
                 return transactionType;
@@ -25,12 +29,16 @@ public enum TransactionType {
         throw new IllegalArgumentException("Invalid transaction code: " + code);
     }
 
-    public static TransactionType toEnum(String name) {
+    public static TransactionType toEnum(String type) {
+        if (null == type) {
+            throw new IllegalArgumentException("Transaction type can't be null.");
+        }
+
         for(TransactionType transactionType: TransactionType.values()){
-            if(name.equals(transactionType.getName())){
+            if(type.equals(transactionType.getType())){
                 return transactionType;
             }
         }
-        throw new IllegalArgumentException("Invalid transaction name: " + name);
+        throw new IllegalArgumentException("Invalid transaction name: " + type);
     }
 }

@@ -8,14 +8,18 @@ public enum CurrencyType {
     CRYPTO(2L, "Crypto");
 
     private final Long code;
-    private final String name;
+    private final String type;
 
-    CurrencyType(Long code, String name) {
+    CurrencyType(Long code, String type) {
         this.code = code;
-        this.name = name;
+        this.type = type;
     }
 
     public static CurrencyType toEnum(Long code) {
+        if (null == code) {
+            throw new IllegalArgumentException("Currency code can't be null.");
+        }
+
         for(CurrencyType currencyType: CurrencyType.values()){
             if(code.equals(currencyType.getCode())){
                 return currencyType;
@@ -24,12 +28,16 @@ public enum CurrencyType {
         throw new IllegalArgumentException("Invalid currency code: " + code);
     }
 
-    public static CurrencyType toEnum(String name) {
+    public static CurrencyType toEnum(String type) {
+        if (null == type) {
+            throw new IllegalArgumentException("Currency type can't be null.");
+        }
+
         for(CurrencyType currencyType: CurrencyType.values()){
-            if(name.equals(currencyType.getName())){
+            if(type.equals(currencyType.getType())){
                 return currencyType;
             }
         }
-        throw new IllegalArgumentException("Invalid currency name: " + name);
+        throw new IllegalArgumentException("Invalid currency name: " + type);
     }
 }
