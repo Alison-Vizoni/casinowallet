@@ -2,19 +2,16 @@ package com.casinowallet.casinowallet.models.dto;
 
 import com.casinowallet.casinowallet.models.entity.Currency;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serial;
 import java.io.Serializable;
 
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
 public class CurrencyDto implements Serializable {
     @Serial
@@ -25,7 +22,7 @@ public class CurrencyDto implements Serializable {
     private String code;
 
     @Positive(message = "Rate must be positive.")
-    @NotEmpty(message = "Rate is required.")
+    @NotNull(message = "Rate is required.")
     private Double rate;
 
     @NotEmpty(message = "Type is required.")

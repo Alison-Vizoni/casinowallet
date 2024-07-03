@@ -27,10 +27,30 @@ public class CurrencyController {
         return ResponseEntity.ok().body(currenciesDto);
     }
 
+    @GetMapping("/{code}")
+    public ResponseEntity<Currency> FindByCode(@PathVariable String code){
+        Currency currency = currencyService.findByCode(code);
+        return ResponseEntity.ok().body(currency);
+    }
+
     @PostMapping
     public ResponseEntity<Currency> insert(@Valid @RequestBody CurrencyDto currencyDto) {
         Currency currency = currencyService.fromDto(currencyDto);
         Currency newCurrency = currencyService.insert(currency);
         return ResponseEntity.status(HttpStatus.CREATED).body(newCurrency);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@Valid @RequestBody CurrencyDto currencyDto, @PathVariable Long id){
+        Currency currency = currencyService.fromDto(currencyDto);
+        currency.setId(id);
+        currencyService.update(currency);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        currencyService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
