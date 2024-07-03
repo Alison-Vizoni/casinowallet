@@ -20,7 +20,7 @@ public class CurrencyController {
     private CurrencyService currencyService;
 
     @GetMapping
-    public ResponseEntity<List<CurrencyDto>> getAll() {
+    public ResponseEntity<List<CurrencyDto>> findAll() {
         List<Currency> currencies = currencyService.findAll();
         List<CurrencyDto> currenciesDto = currencies.stream()
                 .map(CurrencyDto::new).collect(Collectors.toList());
