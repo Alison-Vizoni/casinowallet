@@ -28,7 +28,7 @@ public class CurrencyController {
     }
 
     @GetMapping("/{code}")
-    public ResponseEntity<Currency> FindByCode(@PathVariable String code){
+    public ResponseEntity<Currency> FindByCode(@PathVariable String code) {
         Currency currency = currencyService.findByCode(code);
         return ResponseEntity.ok().body(currency);
     }
@@ -41,7 +41,7 @@ public class CurrencyController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@Valid @RequestBody CurrencyDto currencyDto, @PathVariable Long id){
+    public ResponseEntity<Void> update(@Valid @RequestBody CurrencyDto currencyDto, @PathVariable Long id) {
         Currency currency = currencyService.fromDto(currencyDto);
         currency.setId(id);
         currencyService.update(currency);
@@ -49,7 +49,7 @@ public class CurrencyController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         currencyService.delete(id);
         return ResponseEntity.noContent().build();
     }
