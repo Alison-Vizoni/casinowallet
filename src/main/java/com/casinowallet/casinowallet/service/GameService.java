@@ -1,6 +1,6 @@
 package com.casinowallet.casinowallet.service;
 
-import com.casinowallet.casinowallet.models.dto.GameNewDto;
+import com.casinowallet.casinowallet.models.dto.GameDto;
 import com.casinowallet.casinowallet.models.entity.Game;
 import com.casinowallet.casinowallet.models.entity.Provider;
 import com.casinowallet.casinowallet.models.entity.enums.GameType;
@@ -23,6 +23,13 @@ public class GameService {
     @Autowired
     private ProviderService providerService;
 
+    public Game findById(Long id) {
+        Optional<Game> game = gameRepository.findById(id);
+        return game.orElseThrow(() -> new ObjectNotFoundException(new StringBuilder()
+                .append("Object not found! Id ")
+                .append(id).toString()));
+    }
+
     public List<Game> findByProvider(Long id) {
         Optional<List<Game>> games = gameRepository.findByProviderId(id);
         return games.orElseThrow(() -> new ObjectNotFoundException(new StringBuilder()
@@ -39,13 +46,30 @@ public class GameService {
         }
     }
 
-    public Game fromDto(GameNewDto gameNewDto) {
-        Provider provider = providerService.findById(gameNewDto.getProviderId());
+    public Game fromDto(GameDto gameDto) {
+        Provider provider = providerService.findById(gameDto.getProviderId());
         return new Game(
                 null,
-                gameNewDto.getStrId(),
-                GameType.toEnum(gameNewDto.getType()),
+                gameDto.getStrId(),
+                GameType.toEnum(gameDto.getType()),
                 provider
         );
+    }
+
+    public void update(Game game) {
+        Game gameToUpdate = this.findById(game.getId());
+        this.updateData(gameToUpdate, game);
+        gameRepository.save(gameToUpdate);
+    }
+
+    public void delete(Long id) {
+        this.findById(id);
+        gameRepository.deleteById(id);
+    }
+
+    private void updateData(Game gameToUpdate, Game game) {
+        gameToUpdate.setStrId(game.getStrId());
+        gameToUpdate.setType(game.getType());
+        gameToUpdate.setProvider(game.getProvider());
     }
 }
