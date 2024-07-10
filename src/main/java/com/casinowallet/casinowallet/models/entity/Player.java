@@ -1,7 +1,9 @@
 package com.casinowallet.casinowallet.models.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -9,6 +11,8 @@ import java.io.Serializable;
 @Entity
 @Table
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Player implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -17,7 +21,7 @@ public class Player implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false, unique = true)
     private String nickname;
 
     @OneToOne(mappedBy = "player")
