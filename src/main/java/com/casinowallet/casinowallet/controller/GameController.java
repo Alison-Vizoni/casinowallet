@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/game")
+@RequestMapping(value = "/game")
 public class GameController {
 
     @Autowired
