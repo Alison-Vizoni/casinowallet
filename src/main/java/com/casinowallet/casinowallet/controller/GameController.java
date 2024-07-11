@@ -20,7 +20,7 @@ public class GameController {
     private GameService gameService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Game> findById(@PathVariable Long id){
+    public ResponseEntity<Game> findById(@PathVariable Long id) {
         Game game = gameService.findById(id);
         return ResponseEntity.ok().body(game);
     }
@@ -41,7 +41,7 @@ public class GameController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@Valid @RequestBody GameDto gameDto, @PathVariable Long id){
+    public ResponseEntity<Void> update(@Valid @RequestBody GameDto gameDto, @PathVariable Long id) {
         Game game = gameService.fromDto(gameDto);
         game.setId(id);
         gameService.update(game);
@@ -49,7 +49,7 @@ public class GameController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         gameService.delete(id);
         return ResponseEntity.noContent().build();
     }
