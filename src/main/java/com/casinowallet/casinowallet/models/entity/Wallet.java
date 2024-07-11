@@ -1,5 +1,6 @@
 package com.casinowallet.casinowallet.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,9 +29,11 @@ public class Wallet implements Serializable {
     @Column(nullable = false)
     private String baseCurrency;
 
+    @JsonIgnore
     @OneToOne
     private Player player;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "wallet")
     private List<Transaction> transactions;
 }
