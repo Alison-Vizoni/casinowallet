@@ -1,6 +1,7 @@
 package com.casinowallet.casinowallet.service;
 
 import com.casinowallet.casinowallet.models.dto.GameDto;
+import com.casinowallet.casinowallet.models.dto.OpenGameDto;
 import com.casinowallet.casinowallet.models.entity.Game;
 import com.casinowallet.casinowallet.models.entity.Provider;
 import com.casinowallet.casinowallet.models.entity.enums.GameType;
@@ -23,6 +24,9 @@ public class GameService {
     @Autowired
     private ProviderService providerService;
 
+    @Autowired
+    private AccessService accessService;
+
     public Game findById(Long id) {
         Optional<Game> game = gameRepository.findById(id);
         return game.orElseThrow(() -> new ObjectNotFoundException(new StringBuilder()
@@ -44,6 +48,10 @@ public class GameService {
         } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityException("Error saving the game in the database.", e);
         }
+    }
+
+    public String openGame(OpenGameDto openGameDto) {
+        return accessService.createAccessToken(openGameDto);
     }
 
     public Game fromDto(GameDto gameDto) {

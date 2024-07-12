@@ -1,16 +1,22 @@
 package com.casinowallet.casinowallet.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Access implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -20,16 +26,13 @@ public class Access implements Serializable {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
     @Column(nullable = false)
-    private LocalDateTime expiresAt;
+    private Instant expiresAt;
 
     @Column(nullable = false)
     private Double currencyRate;
-
-    @Column(nullable = false)
-    private Double currencyRateUsd;
 
     @Column(nullable = false)
     private String currencyCode;
@@ -40,6 +43,7 @@ public class Access implements Serializable {
     @ManyToOne
     private Game game;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "access")
     private List<Transaction> transactions;
 }

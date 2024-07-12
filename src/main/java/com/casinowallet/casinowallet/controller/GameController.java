@@ -1,6 +1,7 @@
 package com.casinowallet.casinowallet.controller;
 
 import com.casinowallet.casinowallet.models.dto.GameDto;
+import com.casinowallet.casinowallet.models.dto.OpenGameDto;
 import com.casinowallet.casinowallet.models.entity.Game;
 import com.casinowallet.casinowallet.service.GameService;
 import jakarta.validation.Valid;
@@ -38,6 +39,12 @@ public class GameController {
         Game game = gameService.fromDto(gameDto);
         Game newGame = gameService.insert(game);
         return ResponseEntity.status(HttpStatus.CREATED).body(newGame);
+    }
+
+    @PostMapping("/open/{id}")
+    public ResponseEntity<String> openGame(@Valid @RequestBody OpenGameDto openGameDto) {
+        String token = gameService.openGame(openGameDto);
+        return ResponseEntity.ok().body(token);
     }
 
     @PutMapping("/{id}")
