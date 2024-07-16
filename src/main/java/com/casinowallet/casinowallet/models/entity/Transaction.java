@@ -6,7 +6,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Table
@@ -20,19 +20,19 @@ public class Transaction implements Serializable {
     private Long id;
 
     @Column(nullable = false)
+    private String externalId;
+
+    @Column(nullable = false)
     private TransactionType type;
 
     @Column(nullable = false)
     private Long amount;
 
     @Column(nullable = false)
-    private Long usdAmount;
-
-    @Column(nullable = false)
     private Boolean isFree;
 
     @Column(nullable = false)
-    private LocalDateTime dateTime;
+    private Instant dateTime;
 
     @Column(nullable = false)
     private String currencyCode;

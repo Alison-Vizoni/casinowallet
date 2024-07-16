@@ -26,14 +26,14 @@ public class CurrencyService {
     public Currency findById(Long id) {
         Optional<Currency> currency = currencyRepository.findById(id);
         return currency.orElseThrow(() -> new ObjectNotFoundException(new StringBuilder()
-                .append("Object not found! Id: ")
+                .append("Currency not found! Id: ")
                 .append(id).toString()));
     }
 
     public Currency findByCode(String code) {
         Optional<Currency> currency = currencyRepository.findByCode(code);
         return currency.orElseThrow(() -> new ObjectNotFoundException(new StringBuilder()
-                .append("Object not found! Code: ")
+                .append("Currency not found! Code: ")
                 .append(code).toString()));
     }
 

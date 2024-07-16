@@ -25,14 +25,14 @@ public class ProviderService {
     public Provider findById(Long id) {
         Optional<Provider> provider = providerRepository.findById(id);
         return provider.orElseThrow(() -> new ObjectNotFoundException(new StringBuilder()
-                .append("Object not found! Id: ")
+                .append("Provider not found! Id: ")
                 .append(id).toString()));
     }
 
     public Provider findByStrId(String strId) {
         Optional<Provider> provider = providerRepository.findByStrId(strId);
         return provider.orElseThrow(() -> new ObjectNotFoundException(new StringBuilder()
-                .append("Object not found! strId: ")
+                .append("Provider not found! strId: ")
                 .append(strId).toString()));
     }
 

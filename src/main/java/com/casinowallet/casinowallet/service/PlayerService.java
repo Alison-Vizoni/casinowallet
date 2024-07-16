@@ -21,7 +21,7 @@ public class PlayerService {
     public Player findById(Long id) {
         Optional<Player> player = playerRepository.findById(id);
         return player.orElseThrow(() -> new ObjectNotFoundException(new StringBuilder()
-                .append("Object not found! Id: ")
+                .append("Player not found! Id: ")
                 .append(id).toString()));
     }
 

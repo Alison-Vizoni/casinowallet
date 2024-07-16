@@ -28,7 +28,7 @@ public class WalletService {
     public Wallet findById(Long id) {
         Optional<Wallet> wallet = walletRepository.findById(id);
         return wallet.orElseThrow(() -> new ObjectNotFoundException(new StringBuilder()
-                .append("Object not found! Id: ")
+                .append("Wallet not found! Id: ")
                 .append(id).toString()));
     }
 

@@ -30,14 +30,14 @@ public class GameService {
     public Game findById(Long id) {
         Optional<Game> game = gameRepository.findById(id);
         return game.orElseThrow(() -> new ObjectNotFoundException(new StringBuilder()
-                .append("Object not found! Id ")
+                .append("Game not found! Id ")
                 .append(id).toString()));
     }
 
     public List<Game> findByProvider(Long id) {
         Optional<List<Game>> games = gameRepository.findByProviderId(id);
         return games.orElseThrow(() -> new ObjectNotFoundException(new StringBuilder()
-                .append("Object not found! id: ")
+                .append("Game not found! id: ")
                 .append(id).toString()));
     }
 
