@@ -15,11 +15,14 @@ public class PlayerDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    private Long id;
+
     @NotEmpty(message = "Nickname is required.")
     @Length(min = 5, max = 40, message = "Nickname length must be between 5 and 40.")
     private String nickname;
 
     public PlayerDto(Player player){
+        this.id = player.getId();
         this.nickname = player.getNickname();
     }
 }

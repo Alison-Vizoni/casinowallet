@@ -16,6 +16,8 @@ public class GameDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    private Long id;
+
     @NotEmpty(message = "StrId is required.")
     @Length(min = 1, max = 50, message = "StrId length must be between 1 and 50.")
     private String strId;
@@ -27,6 +29,7 @@ public class GameDto implements Serializable {
     private Long providerId;
 
     public GameDto(Game game) {
+        this.id = game.getId();
         this.strId = game.getStrId();
         this.type = game.getType().getType();
         this.providerId = game.getProvider().getId();

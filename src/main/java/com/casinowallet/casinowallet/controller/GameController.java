@@ -41,7 +41,7 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newGame);
     }
 
-    @PostMapping("/open/{id}")
+    @PostMapping("/open")
     public ResponseEntity<String> openGame(@Valid @RequestBody OpenGameDto openGameDto) {
         String token = gameService.openGame(openGameDto);
         return ResponseEntity.ok().body(token);

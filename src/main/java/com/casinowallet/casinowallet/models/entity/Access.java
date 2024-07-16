@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -36,6 +35,9 @@ public class Access implements Serializable {
 
     @Column(nullable = false)
     private String currencyCode;
+
+    @Column(nullable = false)
+    private Boolean expired;
 
     @ManyToOne
     private Player player;
