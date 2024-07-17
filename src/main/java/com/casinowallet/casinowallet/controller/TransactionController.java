@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/transaction")
+@RequestMapping(value = "/transaction")
 public class TransactionController {
 
     @Autowired
@@ -22,9 +22,9 @@ public class TransactionController {
         return ResponseEntity.ok().body(transaction);
     }
 
-    @GetMapping("/external/{id}")
-    public ResponseEntity<Transaction> findByExternalId(@PathVariable Long id) {
-        Transaction transaction = transactionService.findByExternalId(id);
+    @GetMapping("/external/{externalId}")
+    public ResponseEntity<Transaction> findByExternalId(@PathVariable String externalId) {
+        Transaction transaction = transactionService.findByExternalId(externalId);
         return ResponseEntity.ok().body(transaction);
     }
 

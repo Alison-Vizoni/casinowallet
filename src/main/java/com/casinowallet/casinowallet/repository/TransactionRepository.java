@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
-    Optional<Transaction> findByExternalId(Long externalId);
+    Optional<Transaction> findByExternalId(String externalId);
 }

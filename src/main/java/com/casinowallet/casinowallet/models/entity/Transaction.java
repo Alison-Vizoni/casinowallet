@@ -2,7 +2,9 @@ package com.casinowallet.casinowallet.models.entity;
 
 import com.casinowallet.casinowallet.models.entity.enums.TransactionType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -11,6 +13,8 @@ import java.time.Instant;
 @Entity
 @Table
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Transaction implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -47,5 +51,5 @@ public class Transaction implements Serializable {
     private Wallet wallet;
 
     @ManyToOne(optional = false)
-    private Access access;
+    private Match match;
 }
