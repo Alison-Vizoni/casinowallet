@@ -47,5 +47,5 @@ public class Access implements Serializable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "access")
-    private List<Transaction> transactions;
+    private List<Match> matches;
 }
