@@ -28,7 +28,8 @@ public class CurrencyDto implements Serializable {
     @NotEmpty(message = "Type is required.")
     private String type;
 
-    private Boolean enabled;
+    @NotNull(message = "Enabled can't be null.")
+    private Boolean enabled = true;
 
     public CurrencyDto(Currency currency) {
         this.code = currency.getCode();

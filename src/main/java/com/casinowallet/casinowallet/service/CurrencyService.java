@@ -47,10 +47,6 @@ public class CurrencyService {
     }
 
     public Currency fromDto(CurrencyDto currencyDto) {
-        if (null == currencyDto.getEnabled()) {
-            currencyDto.setEnabled(true);
-        }
-
         return new Currency(
                 null,
                 currencyDto.getCode(),
