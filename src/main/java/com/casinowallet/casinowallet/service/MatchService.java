@@ -1,6 +1,5 @@
 package com.casinowallet.casinowallet.service;
 
-import com.casinowallet.casinowallet.models.dto.MatchDto;
 import com.casinowallet.casinowallet.models.entity.Match;
 import com.casinowallet.casinowallet.repository.MatchRepository;
 import com.casinowallet.casinowallet.service.exceptions.ObjectNotFoundException;
@@ -28,10 +27,7 @@ public class MatchService {
                 .append(externalId).toString()));
     }
 
-    public void update(Match match) {
-    }
-
-    public Match fromDto(MatchDto matchDto) {
-        return new Match();
+    public void finishMatch(Long id) {
+        matchRepository.finishMatch(id);
     }
 }
