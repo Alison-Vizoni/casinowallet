@@ -1,6 +1,7 @@
 package com.casinowallet.casinowallet.controller;
 
 import com.casinowallet.casinowallet.models.dto.TransactionDto;
+import com.casinowallet.casinowallet.models.dto.TransactionNewDto;
 import com.casinowallet.casinowallet.models.entity.Transaction;
 import com.casinowallet.casinowallet.service.TransactionService;
 import jakarta.validation.Valid;
@@ -29,9 +30,17 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<Transaction> insert(@Valid @RequestBody TransactionDto transactionDto) {
-        Transaction transaction = transactionService.fromDto(transactionDto);
+    public ResponseEntity<Transaction> insert(@Valid @RequestBody TransactionNewDto transactionNewDto) {
+        Transaction transaction = transactionService.fromDto(transactionNewDto);
         Transaction newTransaction = transactionService.insert(transaction);
         return ResponseEntity.status(HttpStatus.CREATED).body(newTransaction);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@Valid @RequestBody TransactionDto transactionDto, @PathVariable Long id) {
+        Transaction transaction = transactionService.fromDto(transactionDto);
+        transaction.setId(id);
+        transactionService.update(transaction);
+        return ResponseEntity.noContent().build();
     }
 }

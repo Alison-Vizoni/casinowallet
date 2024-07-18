@@ -11,9 +11,12 @@ import java.time.Instant;
 
 @Data
 @NoArgsConstructor
-public class TransactionDto implements Serializable {
+public class TransactionNewDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
+
+    @NotEmpty(message = "ExternalId is required.")
+    private String externalId;
 
     @NotEmpty(message = "Type is required.")
     private String type;
@@ -26,4 +29,7 @@ public class TransactionDto implements Serializable {
 
     @NotNull(message = "DateTime is required.")
     private Instant dateTime;
+
+    @NotEmpty(message = "MatchExternalId is required.")
+    private String matchExternalId;
 }

@@ -1,6 +1,7 @@
 package com.casinowallet.casinowallet.service;
 
 import com.casinowallet.casinowallet.models.dto.TransactionDto;
+import com.casinowallet.casinowallet.models.dto.TransactionNewDto;
 import com.casinowallet.casinowallet.models.entity.Access;
 import com.casinowallet.casinowallet.models.entity.Game;
 import com.casinowallet.casinowallet.models.entity.Match;
@@ -47,27 +48,52 @@ public class TransactionService {
         }
     }
 
-    public Transaction fromDto(TransactionDto transactionDto) {
-        Match match = matchService.findByExternalId(transactionDto.getExternalId());
+    public Transaction fromDto(TransactionNewDto transactionNewDto) {
+        Match match = matchService.findByExternalId(transactionNewDto.getExternalId());
         Access access = match.getAccess();
         Game game = access.getGame();
 
-        if (null == transactionDto.getIsFree()) {
-            transactionDto.setIsFree(false);
-        }
-
         return new Transaction(
                 null,
-                transactionDto.getExternalId(),
-                TransactionType.toEnum(transactionDto.getType()),
-                transactionDto.getAmount(),
-                transactionDto.getIsFree(),
-                transactionDto.getDateTime(),
+                transactionNewDto.getExternalId(),
+                TransactionType.toEnum(transactionNewDto.getType()),
+                transactionNewDto.getAmount(),
+                transactionNewDto.getIsFree(),
+                transactionNewDto.getDateTime(),
                 access.getCurrencyCode(),
                 game.getId(),
                 game.getProvider(),
                 access.getPlayer().getWallet(),
                 match
         );
+    }
+
+    public Transaction fromDto(TransactionDto transactionDto) {
+        return new Transaction(
+                null,
+                null,
+                TransactionType.toEnum(transactionDto.getType()),
+                transactionDto.getAmount(),
+                transactionDto.getIsFree(),
+                transactionDto.getDateTime(),
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+    }
+
+    public void update(Transaction transaction) {
+        Transaction transactionToUpdate = this.findById(transaction.getId());
+        this.updateData(transactionToUpdate, transaction);
+        transactionRepository.save(transactionToUpdate);
+    }
+
+    private void updateData(Transaction transactionToUpdate, Transaction transaction) {
+        transactionToUpdate.setType(transaction.getType());
+        transactionToUpdate.setAmount(transaction.getAmount());
+        transactionToUpdate.setIsFree(transaction.getIsFree());
+        transactionToUpdate.setDateTime(transaction.getDateTime());
     }
 }
