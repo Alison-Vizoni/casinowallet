@@ -5,6 +5,7 @@ import com.casinowallet.casinowallet.models.dto.integrations.direct.BetDto;
 import com.casinowallet.casinowallet.models.dto.integrations.direct.RollbackDto;
 import com.casinowallet.casinowallet.models.dto.integrations.direct.WinDto;
 import com.casinowallet.casinowallet.models.entity.Transaction;
+import com.casinowallet.casinowallet.models.entity.Wallet;
 import com.casinowallet.casinowallet.service.integrations.BaseIntegrationService;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +13,9 @@ import org.springframework.stereotype.Service;
 public class DirectIntegrationService extends BaseIntegrationService {
 
     @Override
-    public BalanceDto balance(Transaction transaction) {
-        return null;
+    public BalanceDto balance() {
+        Wallet wallet = access.getPlayer().getWallet();
+        return new BalanceDto(wallet);
     }
 
     @Override
