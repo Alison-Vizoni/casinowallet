@@ -1,7 +1,7 @@
-package com.casinowallet.casinowallet.controller;
+package com.casinowallet.casinowallet.controller.core;
 
 import com.casinowallet.casinowallet.models.entity.Match;
-import com.casinowallet.casinowallet.service.MatchService;
+import com.casinowallet.casinowallet.service.core.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

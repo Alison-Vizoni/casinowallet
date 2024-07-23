@@ -1,8 +1,8 @@
-package com.casinowallet.casinowallet.controller;
+package com.casinowallet.casinowallet.controller.core;
 
 import com.casinowallet.casinowallet.models.dto.CurrencyDto;
 import com.casinowallet.casinowallet.models.entity.Currency;
-import com.casinowallet.casinowallet.service.CurrencyService;
+import com.casinowallet.casinowallet.service.core.CurrencyService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
