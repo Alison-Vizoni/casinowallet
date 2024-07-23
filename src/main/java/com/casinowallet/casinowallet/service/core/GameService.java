@@ -1,4 +1,4 @@
-package com.casinowallet.casinowallet.service;
+package com.casinowallet.casinowallet.service.core;
 
 import com.casinowallet.casinowallet.models.dto.GameDto;
 import com.casinowallet.casinowallet.models.dto.OpenGameDto;

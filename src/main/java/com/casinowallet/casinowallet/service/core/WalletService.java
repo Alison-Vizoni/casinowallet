@@ -1,4 +1,4 @@
-package com.casinowallet.casinowallet.service;
+package com.casinowallet.casinowallet.service.core;
 
 import com.casinowallet.casinowallet.models.dto.WalletDto;
 import com.casinowallet.casinowallet.models.entity.Player;
@@ -30,6 +30,13 @@ public class WalletService {
         return wallet.orElseThrow(() -> new ObjectNotFoundException(new StringBuilder()
                 .append("Wallet not found! Id: ")
                 .append(id).toString()));
+    }
+
+    public Wallet findByPlayerId(Long playerId){
+        Optional<Wallet> wallet = walletRepository.findByPlayerId(playerId);
+        return wallet.orElseThrow(() -> new ObjectNotFoundException(new StringBuilder()
+                .append("Wallet not found! PlayerId: ")
+                .append(playerId).toString()));
     }
 
     public List<Wallet> findAll() {

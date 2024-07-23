@@ -1,4 +1,4 @@
-package com.casinowallet.casinowallet.service;
+package com.casinowallet.casinowallet.service.core;
 
 import com.casinowallet.casinowallet.models.dto.ProviderDto;
 import com.casinowallet.casinowallet.models.entity.Provider;

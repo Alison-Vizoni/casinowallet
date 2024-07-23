@@ -1,4 +1,4 @@
-package com.casinowallet.casinowallet.service;
+package com.casinowallet.casinowallet.service.core;
 
 import com.casinowallet.casinowallet.models.dto.OpenGameDto;
 import com.casinowallet.casinowallet.models.entity.Access;
@@ -7,7 +7,10 @@ import com.casinowallet.casinowallet.models.entity.Game;
 import com.casinowallet.casinowallet.models.entity.Player;
 import com.casinowallet.casinowallet.repository.AccessRepository;
 import com.casinowallet.casinowallet.security.PlayerJwtUtil;
+import com.casinowallet.casinowallet.service.exceptions.AccessExpiredException;
 import com.casinowallet.casinowallet.service.exceptions.DataIntegrityException;
+import com.casinowallet.casinowallet.service.exceptions.InvalidAccessException;
+import com.casinowallet.casinowallet.service.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class AccessService {
@@ -35,8 +39,12 @@ public class AccessService {
     @Value("${access.expiration}")
     private Long expiration;
 
-    @Autowired
-    private PlayerJwtUtil playerJwtUtil;
+    public Access findById(Long id) {
+        Optional<Access> access = accessRepository.findById(id);
+        return access.orElseThrow(() -> new ObjectNotFoundException(new StringBuilder()
+                .append("Access not found! Id: ")
+                .append(id).toString()));
+    }
 
     public String createAccessToken(OpenGameDto openGameDto) {
         Game game = gameService.findById(openGameDto.getGameId());
@@ -62,7 +70,7 @@ public class AccessService {
         claims.put("game", game.getStrId());
         claims.put("currency", currency.getCode());
 
-        return playerJwtUtil.generateToken(claims);
+        return PlayerJwtUtil.generateToken(claims);
     }
 
     private Access insert(Access access) {
@@ -76,5 +84,22 @@ public class AccessService {
 
     private void expirePlayerOlderAccess(Long playerId) {
         accessRepository.expirePlayerAccess(playerId, Instant.now().minusSeconds(this.expiration));
+    }
+
+    public void validateAccess(Access access) {
+        if (access == null) {
+            throw new InvalidAccessException("Access is null.");
+        }
+
+        if (access.getExpired()) {
+            throw new AccessExpiredException("Access expired");
+        }
+    }
+
+    public void expireAccess(Access access) {
+        if (access.getExpiresAt().isBefore(Instant.now())){
+            access.setExpired(true);
+            accessRepository.save(access);
+        }
     }
 }

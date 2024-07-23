@@ -1,4 +1,4 @@
-package com.casinowallet.casinowallet.service;
+package com.casinowallet.casinowallet.service.core;
 
 import com.casinowallet.casinowallet.models.dto.CurrencyDto;
 import com.casinowallet.casinowallet.models.entity.Currency;
