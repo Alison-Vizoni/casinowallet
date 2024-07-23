@@ -9,13 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.Instant;
 
-@ControllerAdvice
-public class ResourceExceptionHandler {
+@RestControllerAdvice(basePackages = "com.casinowallet.casinowallet.controller.core")
+public class CoreControllerExceptionHandler {
 
     @ExceptionHandler(DataIntegrityException.class)
     public ResponseEntity<StandardError> databaseError(DataIntegrityException e, HttpServletRequest request) {
