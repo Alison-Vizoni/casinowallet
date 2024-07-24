@@ -1,6 +1,6 @@
 package com.casinowallet.casinowallet.service.core;
 
-import com.casinowallet.casinowallet.models.dto.OpenGameDto;
+import com.casinowallet.casinowallet.models.dto.core.OpenGameDto;
 import com.casinowallet.casinowallet.models.entity.Access;
 import com.casinowallet.casinowallet.models.entity.Currency;
 import com.casinowallet.casinowallet.models.entity.Game;

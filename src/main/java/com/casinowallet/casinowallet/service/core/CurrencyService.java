@@ -1,6 +1,6 @@
 package com.casinowallet.casinowallet.service.core;
 
-import com.casinowallet.casinowallet.models.dto.CurrencyDto;
+import com.casinowallet.casinowallet.models.dto.core.CurrencyDto;
 import com.casinowallet.casinowallet.models.entity.Currency;
 import com.casinowallet.casinowallet.models.entity.enums.CurrencyType;
 import com.casinowallet.casinowallet.repository.CurrencyRepository;

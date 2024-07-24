@@ -1,4 +1,4 @@
-package com.casinowallet.casinowallet.models.dto;
+package com.casinowallet.casinowallet.models.dto.core;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

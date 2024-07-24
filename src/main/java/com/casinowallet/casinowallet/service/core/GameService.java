@@ -1,7 +1,7 @@
 package com.casinowallet.casinowallet.service.core;
 
-import com.casinowallet.casinowallet.models.dto.GameDto;
-import com.casinowallet.casinowallet.models.dto.OpenGameDto;
+import com.casinowallet.casinowallet.models.dto.core.GameDto;
+import com.casinowallet.casinowallet.models.dto.core.OpenGameDto;
 import com.casinowallet.casinowallet.models.entity.Game;
 import com.casinowallet.casinowallet.models.entity.Provider;
 import com.casinowallet.casinowallet.models.entity.enums.GameType;

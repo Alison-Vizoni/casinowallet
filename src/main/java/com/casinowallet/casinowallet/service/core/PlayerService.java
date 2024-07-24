@@ -1,6 +1,6 @@
 package com.casinowallet.casinowallet.service.core;
 
-import com.casinowallet.casinowallet.models.dto.PlayerDto;
+import com.casinowallet.casinowallet.models.dto.core.PlayerDto;
 import com.casinowallet.casinowallet.models.entity.Player;
 import com.casinowallet.casinowallet.repository.PlayerRepository;
 import com.casinowallet.casinowallet.service.exceptions.DataIntegrityException;

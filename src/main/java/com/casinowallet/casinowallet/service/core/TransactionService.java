@@ -1,7 +1,7 @@
 package com.casinowallet.casinowallet.service.core;
 
-import com.casinowallet.casinowallet.models.dto.TransactionDto;
-import com.casinowallet.casinowallet.models.dto.TransactionNewDto;
+import com.casinowallet.casinowallet.models.dto.core.TransactionDto;
+import com.casinowallet.casinowallet.models.dto.core.TransactionNewDto;
 import com.casinowallet.casinowallet.models.entity.Access;
 import com.casinowallet.casinowallet.models.entity.Game;
 import com.casinowallet.casinowallet.models.entity.Match;

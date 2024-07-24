@@ -1,4 +1,4 @@
-package com.casinowallet.casinowallet.models.dto;
+package com.casinowallet.casinowallet.models.dto.core;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -11,12 +11,9 @@ import java.time.Instant;
 
 @Data
 @NoArgsConstructor
-public class TransactionNewDto implements Serializable {
+public class TransactionDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-
-    @NotEmpty(message = "ExternalId is required.")
-    private String externalId;
 
     @NotEmpty(message = "Type is required.")
     private String type;
@@ -29,7 +26,4 @@ public class TransactionNewDto implements Serializable {
 
     @NotNull(message = "DateTime is required.")
     private Instant dateTime;
-
-    @NotEmpty(message = "MatchExternalId is required.")
-    private String matchExternalId;
 }

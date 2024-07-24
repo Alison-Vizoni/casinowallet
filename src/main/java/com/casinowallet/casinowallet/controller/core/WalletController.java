@@ -1,6 +1,6 @@
 package com.casinowallet.casinowallet.controller.core;
 
-import com.casinowallet.casinowallet.models.dto.WalletDto;
+import com.casinowallet.casinowallet.models.dto.core.WalletDto;
 import com.casinowallet.casinowallet.models.entity.Wallet;
 import com.casinowallet.casinowallet.service.core.WalletService;
 import jakarta.validation.Valid;
