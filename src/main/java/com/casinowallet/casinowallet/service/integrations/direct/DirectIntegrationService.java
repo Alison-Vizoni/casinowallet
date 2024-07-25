@@ -1,9 +1,6 @@
 package com.casinowallet.casinowallet.service.integrations.direct;
 
-import com.casinowallet.casinowallet.models.dto.integrations.direct.BalanceDto;
-import com.casinowallet.casinowallet.models.dto.integrations.direct.BetDto;
-import com.casinowallet.casinowallet.models.dto.integrations.direct.RollbackDto;
-import com.casinowallet.casinowallet.models.dto.integrations.direct.WinDto;
+import com.casinowallet.casinowallet.models.dto.integrations.direct.*;
 import com.casinowallet.casinowallet.models.entity.Transaction;
 import com.casinowallet.casinowallet.models.entity.Wallet;
 import com.casinowallet.casinowallet.service.integrations.BaseIntegrationService;
@@ -31,5 +28,13 @@ public class DirectIntegrationService extends BaseIntegrationService {
     @Override
     public WinDto win(Transaction transaction) {
         return null;
+    }
+
+    public Transaction fromDto(BetNewDto betNewDto) {
+        return new Transaction();
+    }
+
+    public Transaction fromDto(WinNewDto betNewDto) {
+        return new Transaction();
     }
 }

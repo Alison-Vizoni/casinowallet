@@ -14,4 +14,9 @@ import java.io.Serializable;
 public class BetDto extends BaseBetDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
+
+    private String transactionExternalId;
+    private Boolean isFree;
+    private Long balance;
+    private String requestId;
 }
