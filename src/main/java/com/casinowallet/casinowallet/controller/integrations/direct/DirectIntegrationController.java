@@ -1,11 +1,10 @@
 package com.casinowallet.casinowallet.controller.integrations.direct;
 
 import com.casinowallet.casinowallet.controller.integrations.BaseIntegrationController;
-import com.casinowallet.casinowallet.models.dto.integrations.direct.BalanceDto;
-import com.casinowallet.casinowallet.models.dto.integrations.direct.BetDto;
-import com.casinowallet.casinowallet.models.dto.integrations.direct.RollbackDto;
-import com.casinowallet.casinowallet.models.dto.integrations.direct.WinDto;
+import com.casinowallet.casinowallet.models.dto.integrations.direct.*;
+import com.casinowallet.casinowallet.models.entity.Transaction;
 import com.casinowallet.casinowallet.service.integrations.direct.DirectIntegrationService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +24,7 @@ public class DirectIntegrationController extends BaseIntegrationController {
         @RequestHeader("X-Player-Token") String token
     ) {
         this.validate(null, token);
-        integrationService.balance();
-        BalanceDto balanceDto = new BalanceDto();
+        BalanceDto balanceDto = this.lockContext(integrationService::balance);
         return ResponseEntity.ok().body(balanceDto);
     }
 
@@ -35,10 +33,13 @@ public class DirectIntegrationController extends BaseIntegrationController {
         @PathVariable String providerStrId,
 // TODO implement signature authentication
 //        @RequestHeader("X-Auth-Signature") String signature,
-        @RequestHeader("X-Player-Token") String token
+        @RequestHeader("X-Player-Token") String token,
+        @Valid @RequestBody BetNewDto betNewDto
     ) {
         this.validate(null, token);
-        return null;
+        Transaction transaction = integrationService.fromDto(betNewDto);
+        BetDto betDto = this.lockContext(integrationService::bet, transaction);
+        return ResponseEntity.ok().body(betDto);
     }
 
     @PostMapping("/win")
@@ -46,10 +47,13 @@ public class DirectIntegrationController extends BaseIntegrationController {
         @PathVariable String providerStrId,
 // TODO implement signature authentication
 //        @RequestHeader("X-Auth-Signature") String signature,
-        @RequestHeader("X-Player-Token") String token
+        @RequestHeader("X-Player-Token") String token,
+        @Valid @RequestBody WinNewDto winNewDto
     ) {
         this.validate(null, token);
-        return null;
+        Transaction transaction = integrationService.fromDto(winNewDto);
+        WinDto winDto = this.lockContext(integrationService::win, transaction);
+        return ResponseEntity.ok().body(winDto);
     }
 
     @PostMapping("/rollback")
@@ -57,10 +61,13 @@ public class DirectIntegrationController extends BaseIntegrationController {
         @PathVariable String providerStrId,
 // TODO implement signature authentication
 //        @RequestHeader("X-Auth-Signature") String signature,
-        @RequestHeader("X-Player-Token") String token
+        @RequestHeader("X-Player-Token") String token,
+        @Valid @RequestBody BetNewDto betNewDto
     ) {
         this.validate(null, token);
-        return null;
+        Transaction transaction = integrationService.fromDto(betNewDto);
+        RollbackDto rollbackDto = this.lockContext(integrationService::rollback, transaction);
+        return ResponseEntity.ok().body(rollbackDto);
     }
 
     @Override

@@ -15,6 +15,9 @@ import com.casinowallet.casinowallet.service.exceptions.InvalidAccessException;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 public abstract class BaseIntegrationService {
     @Autowired
     protected TransactionService transactionService;
@@ -52,5 +55,12 @@ public abstract class BaseIntegrationService {
         this.access = accessService.findById(accessId);
 
         accessService.validateAccess(this.access);
+    }
+
+    public String getLockKey() {
+        return new StringBuilder()
+                .append(access.getPlayer().getId())
+                .append(access.getGame().getId())
+                .append(access.getCurrencyCode()).toString();
     }
 }
