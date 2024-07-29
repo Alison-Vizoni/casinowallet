@@ -32,4 +32,7 @@ public class TransactionNewDto implements Serializable {
 
     @NotEmpty(message = "MatchExternalId is required.")
     private String matchExternalId;
+
+    @NotNull(message = "GameId is required.")
+    private Long gameId;
 }

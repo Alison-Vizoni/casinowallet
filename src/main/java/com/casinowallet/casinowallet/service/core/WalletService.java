@@ -5,6 +5,7 @@ import com.casinowallet.casinowallet.models.entity.Player;
 import com.casinowallet.casinowallet.models.entity.Wallet;
 import com.casinowallet.casinowallet.repository.WalletRepository;
 import com.casinowallet.casinowallet.service.exceptions.DataIntegrityException;
+import com.casinowallet.casinowallet.service.exceptions.NotEnoughMoneyException;
 import com.casinowallet.casinowallet.service.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -78,5 +79,14 @@ public class WalletService {
     private void updateData(Wallet walletToUpdate, Wallet wallet) {
         walletToUpdate.setBaseCurrency(wallet.getBaseCurrency());
         walletToUpdate.setBalance(wallet.getBalance());
+    }
+
+    public void decrement(Wallet wallet, Long amount) {
+        if (wallet.getBalance() < amount) {
+            throw new NotEnoughMoneyException("The player does not have enough money.");
+        }
+
+        wallet.setBalance(wallet.getBalance() - amount);
+        walletRepository.save(wallet);
     }
 }

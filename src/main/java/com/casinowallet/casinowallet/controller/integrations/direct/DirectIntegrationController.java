@@ -3,6 +3,7 @@ package com.casinowallet.casinowallet.controller.integrations.direct;
 import com.casinowallet.casinowallet.controller.integrations.BaseIntegrationController;
 import com.casinowallet.casinowallet.models.dto.integrations.direct.*;
 import com.casinowallet.casinowallet.models.entity.Transaction;
+import com.casinowallet.casinowallet.models.entity.enums.TransactionType;
 import com.casinowallet.casinowallet.service.integrations.direct.DirectIntegrationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,9 @@ public class DirectIntegrationController extends BaseIntegrationController {
         @Valid @RequestBody BetNewDto betNewDto
     ) {
         this.validate(null, token);
-        Transaction transaction = integrationService.fromDto(betNewDto);
+        Transaction transaction = integrationService.fromDto(betNewDto, TransactionType.BET);
         BetDto betDto = this.lockContext(integrationService::bet, transaction);
+        betDto.setRequestId(betNewDto.getRequestId());
         return ResponseEntity.ok().body(betDto);
     }
 
@@ -65,7 +67,7 @@ public class DirectIntegrationController extends BaseIntegrationController {
         @Valid @RequestBody BetNewDto betNewDto
     ) {
         this.validate(null, token);
-        Transaction transaction = integrationService.fromDto(betNewDto);
+        Transaction transaction = integrationService.fromDto(betNewDto, TransactionType.ROLLBACK);
         RollbackDto rollbackDto = this.lockContext(integrationService::rollback, transaction);
         return ResponseEntity.ok().body(rollbackDto);
     }

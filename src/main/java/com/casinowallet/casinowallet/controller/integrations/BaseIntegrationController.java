@@ -1,7 +1,6 @@
 package com.casinowallet.casinowallet.controller.integrations;
 
 import com.casinowallet.casinowallet.controller.utils.RedisConnection;
-import com.casinowallet.casinowallet.service.exceptions.MethodNotImplementedException;
 import com.casinowallet.casinowallet.service.integrations.BaseIntegrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,9 +26,7 @@ public abstract class BaseIntegrationController {
         this.getIntegrationService().validatePlayerToken(token);
     }
 
-    public BaseIntegrationService getIntegrationService() {
-        throw new MethodNotImplementedException("Method getIntegrationService not implemented.");
-    }
+    public abstract BaseIntegrationService getIntegrationService();
 
     public <T, R> R lockContext(Function<T, R> method, T param) {
         R result = null;
@@ -48,12 +45,14 @@ public abstract class BaseIntegrationController {
 
     public <R> R lockContext(Supplier<R> method) {
         R result = null;
+        String lockKey = this.getIntegrationService().getLockKey();
         try{
+            redisConnection.acquireLock(lockKey);
             result = method.get();
         } catch (Exception e) {
             System.out.println("Something wrong. " + e.getMessage());
         } finally {
-            System.out.println("Finish redis lock.");
+            redisConnection.close();
         }
 
         return result;

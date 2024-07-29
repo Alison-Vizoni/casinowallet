@@ -32,8 +32,8 @@ public class TransactionService {
                 .append(id).toString()));
     }
 
-    public Transaction findByExternalId(String externalId) {
-        Optional<Transaction> transaction = transactionRepository.findByExternalId(externalId);
+    public Transaction findByExternalId(Long providerId, String externalId) {
+        Optional<Transaction> transaction = transactionRepository.findByProviderIdAndExternalId(providerId, externalId);
         return transaction.orElseThrow(() -> new ObjectNotFoundException(new StringBuilder()
                 .append("Transaction not found! externalId: ")
                 .append(externalId).toString()));
@@ -49,7 +49,7 @@ public class TransactionService {
     }
 
     public Transaction fromDto(TransactionNewDto transactionNewDto) {
-        Match match = matchService.findByExternalId(transactionNewDto.getExternalId());
+        Match match = matchService.findByExternalId(transactionNewDto.getGameId(), transactionNewDto.getExternalId());
         Access access = match.getAccess();
         Game game = access.getGame();
 

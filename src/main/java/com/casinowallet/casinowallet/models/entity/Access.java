@@ -39,10 +39,10 @@ public class Access implements Serializable {
     @Column(nullable = false)
     private Boolean expired;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Player player;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Game game;
 
     @JsonIgnore

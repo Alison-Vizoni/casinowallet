@@ -18,9 +18,12 @@ public class MatchController {
         return ResponseEntity.ok().body(match);
     }
 
-    @GetMapping("/external/{externalId}")
-    public ResponseEntity<Match> findById(@PathVariable String externalId) {
-        Match match = matchService.findByExternalId(externalId);
+    @GetMapping("/external/{gameId}")
+    public ResponseEntity<Match> findById(
+            @PathVariable Long gameId,
+            @RequestParam(value = "externalId", required = true) String externalId
+    ) {
+        Match match = matchService.findByExternalId(gameId, externalId);
         return ResponseEntity.ok().body(match);
     }
 

@@ -23,9 +23,12 @@ public class TransactionController {
         return ResponseEntity.ok().body(transaction);
     }
 
-    @GetMapping("/external/{externalId}")
-    public ResponseEntity<Transaction> findByExternalId(@PathVariable String externalId) {
-        Transaction transaction = transactionService.findByExternalId(externalId);
+    @GetMapping("/external/{providerId}")
+    public ResponseEntity<Transaction> findByExternalId(
+            @PathVariable Long providerId,
+            @RequestParam(value = "externalId", required = true) String externalId
+    ) {
+        Transaction transaction = transactionService.findByExternalId(providerId, externalId);
         return ResponseEntity.ok().body(transaction);
     }
 
