@@ -7,6 +7,7 @@ import com.casinowallet.casinowallet.models.dto.integrations.BaseWinDto;
 import com.casinowallet.casinowallet.models.entity.Access;
 import com.casinowallet.casinowallet.models.entity.Match;
 import com.casinowallet.casinowallet.models.entity.Transaction;
+import com.casinowallet.casinowallet.models.entity.Wallet;
 import com.casinowallet.casinowallet.models.entity.enums.TransactionType;
 import com.casinowallet.casinowallet.security.PlayerJwtUtil;
 import com.casinowallet.casinowallet.service.core.*;
@@ -91,6 +92,13 @@ public abstract class BaseIntegrationService {
     protected void playerHasEnoughMoney(Transaction transaction) {
         if (this.access.getPlayer().getWallet().getBalance() < transaction.getAmount()){
             throw new NotEnoughMoneyException("The player does not have enough money.");
+        }
+    }
+
+    protected void transactionHasBeenRolledBack(Transaction transaction) {
+        Transaction dbTransaction = transactionService.findByReferenceExternalId(transaction.getExternalId());
+        if (null != dbTransaction && dbTransaction.getType().equals(TransactionType.ROLLBACK)) {
+            throw new TransactionRolledBackException("Transaction has been rolled back.");
         }
     }
 

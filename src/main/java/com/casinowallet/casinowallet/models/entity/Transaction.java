@@ -1,6 +1,7 @@
 package com.casinowallet.casinowallet.models.entity;
 
 import com.casinowallet.casinowallet.models.entity.enums.TransactionType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,6 +44,9 @@ public class Transaction implements Serializable {
 
     @Column(nullable = false)
     private Long gameId;
+
+    @Column
+    private String referenceExternalId;
 
     @ManyToOne(optional = false)
     private Provider provider;

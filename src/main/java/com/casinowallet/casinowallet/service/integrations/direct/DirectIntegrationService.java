@@ -26,6 +26,7 @@ public class DirectIntegrationService extends BaseIntegrationService {
             return new BetDto(validateExistentBetTransaction(dbTxn, transaction));
         }
 
+        transactionHasBeenRolledBack(transaction);
         playerHasEnoughMoney(transaction);
         manageTransactionMatch(transaction);
         insertTransaction(transaction);
@@ -61,6 +62,7 @@ public class DirectIntegrationService extends BaseIntegrationService {
                 Instant.now(),
                 this.access.getCurrencyCode(),
                 this.access.getGame().getId(),
+                null,
                 this.access.getGame().getProvider(),
                 this.access.getPlayer().getWallet(),
                 match

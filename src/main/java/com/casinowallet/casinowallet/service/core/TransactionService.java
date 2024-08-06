@@ -2,10 +2,7 @@ package com.casinowallet.casinowallet.service.core;
 
 import com.casinowallet.casinowallet.models.dto.core.TransactionDto;
 import com.casinowallet.casinowallet.models.dto.core.TransactionNewDto;
-import com.casinowallet.casinowallet.models.entity.Access;
-import com.casinowallet.casinowallet.models.entity.Game;
-import com.casinowallet.casinowallet.models.entity.Match;
-import com.casinowallet.casinowallet.models.entity.Transaction;
+import com.casinowallet.casinowallet.models.entity.*;
 import com.casinowallet.casinowallet.models.entity.enums.TransactionType;
 import com.casinowallet.casinowallet.repository.TransactionRepository;
 import com.casinowallet.casinowallet.service.exceptions.DataIntegrityException;
@@ -62,6 +59,7 @@ public class TransactionService {
                 transactionNewDto.getDateTime(),
                 access.getCurrencyCode(),
                 game.getId(),
+                null,
                 game.getProvider(),
                 access.getPlayer().getWallet(),
                 match
@@ -80,6 +78,7 @@ public class TransactionService {
                 null,
                 null,
                 null,
+                null,
                 null
         );
     }
@@ -88,6 +87,11 @@ public class TransactionService {
         Transaction transactionToUpdate = this.findById(transaction.getId());
         this.updateData(transactionToUpdate, transaction);
         transactionRepository.save(transactionToUpdate);
+    }
+
+    public Transaction findByReferenceExternalId(String referenceExternalId) {
+        Optional<Transaction> wallet = transactionRepository.findByReferenceExternalId(referenceExternalId);
+        return wallet.orElse(null);
     }
 
     private void updateData(Transaction transactionToUpdate, Transaction transaction) {
