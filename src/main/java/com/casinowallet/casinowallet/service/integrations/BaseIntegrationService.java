@@ -5,9 +5,9 @@ import com.casinowallet.casinowallet.models.dto.integrations.BaseBetDto;
 import com.casinowallet.casinowallet.models.dto.integrations.BaseRollbackDto;
 import com.casinowallet.casinowallet.models.dto.integrations.BaseWinDto;
 import com.casinowallet.casinowallet.models.entity.Access;
+import com.casinowallet.casinowallet.models.entity.LastMatch;
 import com.casinowallet.casinowallet.models.entity.Match;
 import com.casinowallet.casinowallet.models.entity.Transaction;
-import com.casinowallet.casinowallet.models.entity.Wallet;
 import com.casinowallet.casinowallet.models.entity.enums.TransactionType;
 import com.casinowallet.casinowallet.security.PlayerJwtUtil;
 import com.casinowallet.casinowallet.service.core.*;
@@ -27,6 +27,9 @@ public abstract class BaseIntegrationService {
 
     @Autowired
     protected MatchService matchService;
+
+    @Autowired
+    private LastMatchService lastMatchService;
 
     @Autowired
     private AccessService accessService;
@@ -107,19 +110,50 @@ public abstract class BaseIntegrationService {
     }
 
     protected void manageTransactionMatch(Transaction transaction) {
+        LastMatch lastMatch = lastMatchService.getLastMatch(access);
         Match match = transaction.getMatch();
-        if (match.getId() == null) {
-            match = matchService.findOrCreateMatch(transaction.getExternalId(), this.access);
-        }
 
-        if (match.getEnded()) {
-            throw new MacthEndedException("The match has ended.");
+        if (lastMatch != null) {
+            if (lastMatch.getMatch().getExternalId().equals(match.getExternalId())) {
+                if (lastMatch.getMatch().getEnded()) {
+                    throw new MacthEndedException("The match has ended.");
+                }
+                transaction.setMatch(lastMatch.getMatch());
+            } else {
+                matchService.finishMatch(lastMatch.getId());
+                Match newMatch = matchService.insert(createMatchObject(match.getExternalId()));
+                transaction.setMatch(newMatch);
+                lastMatchService.updateLastMatch(lastMatch);
+            }
+        } else {
+            Match newMatch = matchService.insert(createMatchObject(match.getExternalId()));
+            transaction.setMatch(newMatch);
+            lastMatchService.updateLastMatch(createLastMatchObject(newMatch));
         }
-
-        transaction.setMatch(match);
     }
 
     protected void insertTransaction(Transaction transaction) {
         transactionService.insert(transaction);
+    }
+
+    private LastMatch createLastMatchObject(Match match) {
+        return new LastMatch(
+                null,
+                access.getGame().getId(),
+                access.getCurrencyCode(),
+                access.getPlayer().getId(),
+                match
+        );
+    }
+
+    private Match createMatchObject(String externalId) {
+        return new Match(
+                null,
+                externalId,
+                false,
+                null,
+                access.getGame(),
+                access
+        );
     }
 }
