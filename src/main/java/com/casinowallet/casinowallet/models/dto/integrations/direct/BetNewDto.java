@@ -25,6 +25,7 @@ public class BetNewDto implements Serializable {
     @NotEmpty(message = "MatchExternalId id required.")
     private String matchExternalId;
 
+    private String referenceBetExternalId;
     private Boolean isFree = false;
     private String requestId;
 }

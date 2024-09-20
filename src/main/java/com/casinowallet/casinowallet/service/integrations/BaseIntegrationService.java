@@ -67,7 +67,7 @@ public abstract class BaseIntegrationService {
                 .append(access.getCurrencyCode()).toString();
     }
 
-    protected Transaction findTransaction(Transaction transaction) {
+    public Transaction findTransaction(Transaction transaction) {
         try {
             return transactionService.findByExternalId(transaction.getProvider().getId(), transaction.getExternalId());
         } catch (DataIntegrityException e) {
@@ -75,14 +75,17 @@ public abstract class BaseIntegrationService {
         }
     }
 
-    protected boolean isTransactionEquals(Transaction dbTransaction, Transaction transaction) {
+    public boolean isTransactionEquals(Transaction dbTransaction, Transaction transaction) {
         return dbTransaction.getAmount().equals(transaction.getAmount())
                 && dbTransaction.getExternalId().equals(transaction.getExternalId())
                 && dbTransaction.getMatch().getExternalId().equals(transaction.getExternalId())
-                && dbTransaction.getIsFree().equals(transaction.getIsFree());
+                && dbTransaction.getIsFree().equals(transaction.getIsFree()
+                && dbTransaction.getReferenceExternalId().equals(transaction.getReferenceExternalId())
+                && dbTransaction.getType().equals(transaction.getType())
+        );
     }
 
-    protected Transaction validateExistentBetTransaction(Transaction dbTxn, Transaction transaction) {
+    public Transaction validateExistentBetTransaction(Transaction dbTxn, Transaction transaction) {
         if (isTransactionEquals(dbTxn, transaction) && dbTxn.getType().equals(TransactionType.BET)) {
             return dbTxn;
         } else if (dbTxn.getType().equals(TransactionType.ROLLBACK)) {
@@ -92,24 +95,32 @@ public abstract class BaseIntegrationService {
         }
     }
 
-    protected void playerHasEnoughMoney(Transaction transaction) {
+    public Transaction validateExistentWinTransaction(Transaction dbTxn, Transaction transaction) {
+        if (isTransactionEquals(dbTxn, transaction) && dbTxn.getType().equals(TransactionType.WIN)) {
+            return dbTxn;
+        } else {
+            throw new InvalidTransactionException("Invalid transaction.");
+        }
+    }
+
+    public void playerHasEnoughMoney(Transaction transaction) {
         if (this.access.getPlayer().getWallet().getBalance() < transaction.getAmount()){
             throw new NotEnoughMoneyException("The player does not have enough money.");
         }
     }
 
-    protected void transactionHasBeenRolledBack(Transaction transaction) {
+    public void transactionHasBeenRolledBack(Transaction transaction) {
         Transaction dbTransaction = transactionService.findByReferenceExternalId(transaction.getExternalId());
         if (null != dbTransaction && dbTransaction.getType().equals(TransactionType.ROLLBACK)) {
             throw new TransactionRolledBackException("Transaction has been rolled back.");
         }
     }
 
-    protected void decrement(Long amount) {
+    public void decrement(Long amount) {
         walletService.decrement(this.access.getPlayer().getWallet(), amount);
     }
 
-    protected void manageTransactionMatch(Transaction transaction) {
+    public void manageTransactionMatch(Transaction transaction) {
         LastMatch lastMatch = lastMatchService.getLastMatch(access);
         Match match = transaction.getMatch();
 
@@ -132,7 +143,7 @@ public abstract class BaseIntegrationService {
         }
     }
 
-    protected void insertTransaction(Transaction transaction) {
+    public void insertTransaction(Transaction transaction) {
         transactionService.insert(transaction);
     }
 

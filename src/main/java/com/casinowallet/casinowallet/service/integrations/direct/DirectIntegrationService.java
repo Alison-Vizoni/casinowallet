@@ -41,7 +41,12 @@ public class DirectIntegrationService extends BaseIntegrationService {
 
     @Override
     public WinDto win(Transaction transaction) {
-        return null;
+        Transaction dbTxn = findTransaction(transaction);
+        if (dbTxn != null) {
+            return new WinDto(validateExistentWinTransaction(dbTxn, transaction));
+        }
+
+        return new WinDto(transaction);
     }
 
     public Transaction fromDto(BetNewDto betNewDto, TransactionType transactionType) {
@@ -62,7 +67,7 @@ public class DirectIntegrationService extends BaseIntegrationService {
                 Instant.now(),
                 this.access.getCurrencyCode(),
                 this.access.getGame().getId(),
-                null,
+                betNewDto.getReferenceBetExternalId(),
                 this.access.getGame().getProvider(),
                 this.access.getPlayer().getWallet(),
                 match
@@ -70,6 +75,28 @@ public class DirectIntegrationService extends BaseIntegrationService {
     }
 
     public Transaction fromDto(WinNewDto winNewDto) {
-        return new Transaction();
+        Match match = new Match(
+                null,
+                winNewDto.getMatchExternalId(),
+                null,
+                null,
+                null,
+                null
+        );
+
+        return new Transaction(
+                null,
+                winNewDto.getTransactionExternalId(),
+                TransactionType.WIN,
+                winNewDto.getAmount(),
+                false,
+                Instant.now(),
+                this.access.getCurrencyCode(),
+                this.access.getGame().getId(),
+                winNewDto.getReferenceBetExternalId(),
+                this.access.getGame().getProvider(),
+                this.access.getPlayer().getWallet(),
+                match
+        );
     }
 }
